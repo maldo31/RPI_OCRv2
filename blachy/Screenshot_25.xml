@@ -1,0 +1,26 @@
+<annotation>
+	<folder>blachy</folder>
+	<filename>Screenshot_25.jpg</filename>
+	<path>/home/maldo/PycharmProjects/labeling/blachy/Screenshot_25.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>648</width>
+		<height>584</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>number_plate</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>387</xmin>
+			<ymin>374</ymin>
+			<xmax>542</xmax>
+			<ymax>428</ymax>
+		</bndbox>
+	</object>
+</annotation>
