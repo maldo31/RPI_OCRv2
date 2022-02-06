@@ -4,7 +4,7 @@ from glob import glob
 
 from tensorboard.notebook import display
 
-path = glob('./blachy/*.xml')
+path = glob('./test_images_pl/*.xml')
 #print(path)
 
 #filename = path[0]
