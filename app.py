@@ -1,0 +1,46 @@
+import base64
+import uuid
+from PIL import Image
+
+
+from flask import Flask, render_template, request,jsonify
+import os
+from deeplearn import OCR
+
+
+app = Flask(__name__)
+
+
+BASE_PATH = os.getcwd()
+UPLOAD_PATH = os.path.join(BASE_PATH,'static/upload/')
+@app.route('/',methods=['POST','GET'])
+def index():
+    if request.method == 'POST':
+        upload_file = request.files['image_name']
+        filename = upload_file.filename
+        path_save = os.path.join(UPLOAD_PATH,filename)
+        upload_file.save(path_save)
+        text = OCR(path_save,filename)
+        return render_template('index.html',upload=True,upload_image=filename,text=text)
+
+    return render_template('index.html',upload=False)
+
+@app.route('/home')
+def home():
+    return render_template('layout.html')
+
+@app.route('/photo', methods=['POST'])
+def register_new():
+    print("New post request")
+    img = Image.open(request.files['file'])
+    filename = str(uuid.uuid4()) + ".jpg"
+    path_save = os.path.join(UPLOAD_PATH,filename)
+    print(path_save)
+    img.save(path_save)
+    text = OCR(path_save,filename)
+    print(text)
+    return text
+
+
+if __name__=="__main__":
+    app.run()
