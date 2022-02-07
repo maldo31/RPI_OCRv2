@@ -5,7 +5,7 @@ from PIL import Image
 
 from flask import Flask, render_template, request,jsonify
 import os
-from deeplearn import OCR
+from deeplearn import OCR, text_reck
 
 
 app = Flask(__name__)
@@ -31,13 +31,25 @@ def home():
 
 @app.route('/photo', methods=['POST'])
 def register_new():
-    print("New post request")
+    print("New post request photo")
     img = Image.open(request.files['file'])
-    filename = str(uuid.uuid4()) + ".jpg"
+    filename = "photo"+str(uuid.uuid4()) + ".jpg"
     path_save = os.path.join(UPLOAD_PATH,filename)
     print(path_save)
     img.save(path_save)
     text = OCR(path_save,filename)
+    print(text)
+    return text
+
+@app.route('/readtext', methods=['POST'])
+def register_new_text():
+    print("New post request readtext")
+    img = Image.open(request.files['file'])
+    filename = "text"+str(uuid.uuid4()) + ".jpg"
+    path_save = os.path.join(UPLOAD_PATH,filename)
+    print(path_save)
+    img.save(path_save)
+    text = text_reck(path_save)
     print(text)
     return text
 

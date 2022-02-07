@@ -56,7 +56,7 @@ def OCR(path, filename):
     roi = img[ymin:ymax, xmin:xmax]
     text = pt.image_to_string(roi)
     text = polish_plates_check(text)
-    for px in range(5, 60, 5):
+    for px in range(5, 120, 5):
         if not text or text.isspace() or len(text) < 7 or len(text) > 8 or not text[0] in first_letters:
             roi = img[ymin - px:ymax + px, xmin - px:xmax + px]
             # can experiment with some threshold
@@ -70,6 +70,14 @@ def OCR(path, filename):
     roi_bgr = cv2.cvtColor(roi, cv2.COLOR_RGB2BGR)
     cv2.imwrite(os.path.join(ROI_PATH, filename), roi_bgr)
     print(text)
+    return text
+
+def text_reck(path):
+    img = np.array(load_img(path))
+    lol, img= cv2.threshold(img, 120, 255, cv2.THRESH_BINARY)
+    text = pt.image_to_string(img)
+
+    text = polish_plates_check(text)
     return text
 
 
