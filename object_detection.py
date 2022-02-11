@@ -33,7 +33,6 @@ images_path = list(df['filepath'].apply(getFilname))
 # cv2.imshow('example',img)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
-
 # cv2.rectangle(img,)
 
 labels = df.iloc[:,1:].values
@@ -72,8 +71,7 @@ inception_resnet.trainable=False
 #############
 headmodel = inception_resnet.output
 headmodel = Flatten()(headmodel)
-#### 3 layers
-headmodel = Dense(1000,activation="relu")(headmodel)
+#### 4 layers
 headmodel = Dense(500,activation="relu")(headmodel)
 headmodel = Dense(250,activation="relu")(headmodel)
 headmodel = Dense(100,activation="relu")(headmodel)
@@ -86,9 +84,9 @@ model.compile(loss='mse',optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5))
 model.summary()
 
 ##### train model
-tfb =TensorBoard('object_detection_v6')
-history = model.fit(x=x_train,y=y_train,batch_size=10,epochs=250
+tfb =TensorBoard('object_detection_v9')
+history = model.fit(x=x_train,y=y_train,batch_size=10,epochs=150
                     ,validation_data=(x_test,y_test),
                     callbacks=[tfb])
 
-model.save('./model/object_detection_pl_v6.h5')
+model.save('./model/object_detection_pl_v9.h5')

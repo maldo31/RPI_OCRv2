@@ -1,4 +1,5 @@
 import base64
+import io
 import uuid
 from PIL import Image
 
@@ -41,18 +42,24 @@ def register_new():
     print(text)
     return text
 
+@app.route('/post', methods=['POST'])
+def post():
+    print(request.data)
+    return ''
+
+
 @app.route('/readtext', methods=['POST'])
 def register_new_text():
     print("New post request readtext")
-    img = Image.open(request.files['file'])
+    image = request.files["image"]
+    image_bytes = Image.open(io.BytesIO(image.read()))
     filename = "text"+str(uuid.uuid4()) + ".jpg"
     path_save = os.path.join(UPLOAD_PATH,filename)
     print(path_save)
-    img.save(path_save)
-    text = text_reck(path_save)
-    print(text)
+    image_bytes.save(path_save)
+    text = text_reck(path_save,filename)
     return text
 
 
 if __name__=="__main__":
-    app.run()
+    app.run(host='0.0.0.0')
